@@ -1,0 +1,48 @@
+ <%= render "books/search" %>
+
+
+<h1><%= @range %> search for"<%= @keyword %>"</h1>
+<table class="table table-hover table-inverse">
+  <% if @range == "User" %>
+  <tbody>
+    <tr>
+    <th>Profile image</th>
+    <th>Name</th>
+    </tr>
+    <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= link_to user_path(user.id) do %>
+        <%= image_tag user.get_profile_image %>
+        <% end %>
+        </td>
+      <td><%= user.name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <% else %>
+  <tbody>
+    <tr>
+      <th>Profile image</th>
+      <th>Title</th>
+      <th>Opinion</th>
+    </tr>
+    <% @books.each do |book| %>
+    <tr>
+      <td>
+        <%= link_to user_path(book.id) do %>
+        <%= image_tag book.user.get_profile_image %>
+        <% end %>
+        </td>
+      <td>
+        <%= link_to book_path(book.id) do %>
+        <%= book.title %>
+        <% end %>
+        </td>
+      <td><%= book.body %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  <% end %>
+
+</table>

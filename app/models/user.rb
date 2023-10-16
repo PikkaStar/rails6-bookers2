@@ -31,13 +31,26 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
-
-
   def get_profile_image
     if profile_image.attached?
     profile_image
     else
       'no_image.jpg'
+    end
   end
-end
+
+  def self.looks(search,word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?","#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+      elsif search == "backward_match"
+        @user = User.where("name LIKE?","%#{word}")
+        elsif search == "partial_match"
+          @user = User.where("name LIKE?","%#{word}%")
+        else
+          @user = User.all
+        end
+      end
+
 end
