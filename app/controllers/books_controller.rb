@@ -3,10 +3,11 @@ before_action :logined_user
 before_action :correct_user,only: [:edit,:update]
 
   def show
+    @user = current_user
     @book = Book.find(params[:id])
-    @user = @book.user
     @book_new = Book.new
-    @comment = BookComment.new
+    @book_comments = @book.book_comments
+    @book_comment = current_user.book_comments.new(book_id: @book.id)
   end
 
   def index
