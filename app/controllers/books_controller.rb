@@ -8,15 +8,21 @@ before_action :correct_user,only: [:edit,:update]
     @book_new = Book.new
     @book_comments = @book.book_comments
     @book_comment = current_user.book_comments.new(book_id: @book.id)
+    @book_detail = Book.find(params[:id])
+    unless ReadCount.find_by(user_id: current_user.id,book_id: @book_detail.id)
+      current_user.read_counts.create(book_id: @book_detail.id)
+    end
   end
 
   def index
+    
    to = Time.current.at_end_of_day
    from = (to - 6.day).at_beginning_of_day
    @books = Book.includes(:favorited_users).
    sort_by {|x| x.favorited_users.includes(:favorites).where(created_at: from...to).size
    }.reverse
     @book = Book.new
+    
   end
 
   def create
