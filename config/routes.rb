@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   end
     resources :messages,only: [:create]
     resources :rooms,only: [:create,:show]
-    resources :groups,only: [:new,:create,:index,:show,:edit,:update]
+    resources :groups,only: [:new,:create,:index,:show,:edit,:update]do
+    resource :group_users,only: [:create,:destroy]
+    end
     get "search"=>"searches#search"
 
 

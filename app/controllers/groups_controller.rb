@@ -19,12 +19,13 @@ class GroupsController < ApplicationController
     @groups = Group.all
     @book = Book.new
     @user = User.find(current_user.id)
+    
   end
 
   def show
     @book = Book.new
     @group = Group.find(params[:id])
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def edit
